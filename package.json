@@ -6,7 +6,8 @@
     "build:clear": "rimraf lib dist",
     "build:typescript": "tsc",
     "build:rollup": "rollup -c",
-    "build": "build:clear && npm run build:typescript && npm run build:rollup",
+    "build:optimize": "google-closure-compiler --js=dist/bundle.js --js_output_file=dist/bundle.min.js --compilation_level=SIMPLE --language_in=ECMASCRIPT_2015 --language_out=ECMASCRIPT5_STRICT",
+    "build": "npm run build:clear && npm run build:typescript && npm run build:rollup && npm run build:optimize",
     "test": "jest",
     "tdd": "jest --watch",
     "dev": "npm run build:clear && tsc --pretty --watch",
@@ -17,6 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^23.3.1",
+    "google-closure-compiler": "^20180805.0.0",
     "jest": "^23.5.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.64.1",

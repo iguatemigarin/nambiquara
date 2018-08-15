@@ -1,3 +1,1 @@
-import { value } from './excel'
-
-console.log(value)
+export const empty = null

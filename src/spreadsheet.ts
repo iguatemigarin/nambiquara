@@ -44,7 +44,7 @@ const makeWorkBook = (values: CellValue[][]): string => makeTag({
     'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
   },
 })
-export const makeSpreadsheet = (values: CellValue[][]): string => [
+export const makeSpreadsheet = (values: CellValue[][] = [[]]): string => [
   HEAD,
   makeWorkBook(values),
 ].join('')

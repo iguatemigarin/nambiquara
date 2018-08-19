@@ -4,7 +4,7 @@ describe('Tag tool', () => {
   it('should create simple tag without children', () => {
     const settings = { name: 'MyTag' }
     const tag = makeTag(settings)
-    expect(tag).toBe('<MyTag />')
+    expect(tag).toBe('<MyTag/>')
   })
   it('should create simple tag with children', () => {
     const settings = { name: 'MyTag', children: 'this is a text' }

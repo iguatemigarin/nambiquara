@@ -12,7 +12,7 @@ export const makeTag = (tag: Tag): string => {
   const head = `<${name}${params.length > 0 ? ' ' + params : ''}`
   const childrenToRender: string[] = []
   if (children == null) {
-    return `${head} />`
+    return `${head}/>`
   }
   if (Array.isArray(children)) {
     children.map(child => childrenToRender.push(child))

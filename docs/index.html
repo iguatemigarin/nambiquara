@@ -69,6 +69,31 @@
 				<p>A js-to-excel tool</p>
 				<p><strong>Nanbiquara</strong>: fala inteligente, de gente esperta – tribo do Mato Grosso (pauetê-nanbiquara – baquara – biquara).
 				[<a href="https://www.dicionariotupiguarani.com.br/dicionario/nanbiquara/]">https://www.dicionariotupiguarani.com.br/dicionario/nanbiquara/]</a></p>
+				<h2 id="usage">Usage</h2>
+				<pre><code class="lang-javascript"><span class="hljs-keyword">import</span> { fromArray } <span class="hljs-keyword">from</span> <span class="hljs-string">'nambiquara'</span>
+
+<span class="hljs-keyword">const</span> data = [
+  [<span class="hljs-string">'A1'</span>, <span class="hljs-string">'B1'</span>, <span class="hljs-string">'C1'</span>],
+  [<span class="hljs-string">'A2'</span>, <span class="hljs-string">'B2'</span>, <span class="hljs-string">'C2'</span>],
+  [<span class="hljs-string">'A3'</span>, <span class="hljs-string">'B3'</span>, <span class="hljs-string">'C3'</span>],
+]
+
+<span class="hljs-keyword">const</span> spreadsheet = fromArray(data)
+<span class="hljs-comment">/*
+spreadsheet = '&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;?mso-application progid="Excel.Sheet"?&gt;&lt;Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:c="urn:schemas-microsoft-com:office:component:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&lt;ss:Worksheet ss:Name="Worksheet1"&gt;&lt;Table&gt;&lt;Row&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;A1&lt;/Data&gt;&lt;/Cell&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;B1&lt;/Data&gt;&lt;/Cell&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;C1&lt;/Data&gt;&lt;/Cell&gt;&lt;/Row&gt;&lt;Row&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;A2&lt;/Data&gt;&lt;/Cell&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;B2&lt;/Data&gt;&lt;/Cell&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;C2&lt;/Data&gt;&lt;/Cell&gt;&lt;/Row&gt;&lt;Row&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;A3&lt;/Data&gt;&lt;/Cell&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;B3&lt;/Data&gt;&lt;/Cell&gt;&lt;Cell&gt;&lt;Data ss:Type="String"&gt;C3&lt;/Data&gt;&lt;/Cell&gt;&lt;/Row&gt;&lt;/Table&gt;&lt;x:WorksheetOptions/&gt;&lt;/ss:Worksheet&gt;&lt;/Workbook&gt;'
+*/</span>
+</code></pre>
+				<h2 id="api">API</h2>
+				<h3 id="fromarray">fromArray</h3>
+				<p>Accepts a two dimension array with primitive values.
+				Returns a string.</p>
+				<pre><code class="lang-javascript">fromArray([
+  [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3.8</span>, <span class="hljs-built_in">Math</span>.PI],
+  [<span class="hljs-literal">null</span>, <span class="hljs-literal">undefined</span>],
+  [<span class="hljs-string">'a sentence'</span>, <span class="hljs-string">'3'</span>, <span class="hljs-string">'three'</span>]
+])
+</code></pre>
+				<hr>
 				<h3 id="code-and-license">Code and license</h3>
 				<p>Report bugs or contribute at <a href="https://github.com/iguatemigarin/nambiquara">GitHub</a></p>
 				<p>License: MIT</p>

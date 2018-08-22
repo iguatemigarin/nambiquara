@@ -1,4 +1,3 @@
-
 import { fromArray } from './main'
 
 describe('main package', () => {

@@ -1,7 +1,5 @@
-
-import { DOMParser, XMLSerializer } from 'xmldom'
+import { DOMParser } from 'xmldom'
 import { makeSpreadsheet } from './spreadsheet'
-import { removeDoubleSpaces, removeNewLines } from './utils/string'
 
 const parser = new DOMParser()
 

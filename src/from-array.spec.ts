@@ -1,7 +1,6 @@
 import { DOMParser } from 'xmldom'
 
 import { fromArray } from './from-array'
-import { removeDoubleSpaces, removeNewLines } from './utils/string'
 
 const parser = new DOMParser()
 

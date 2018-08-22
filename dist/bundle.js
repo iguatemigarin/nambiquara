@@ -38,11 +38,10 @@
     var HEAD = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>';
     var makeWorksheetOptions = function () { return makeTag({ name: 'x:WorksheetOptions' }); };
     var makeTypeForValue = function (value) {
-        switch (typeof value) {
-            case 'string': return 'String';
-            case 'number': return 'Number';
-            default: return 'String';
+        if (typeof value === 'number') {
+            return 'Number';
         }
+        return 'String';
     };
     var makeValue = function (value) { return value == null ? '' : String(value); };
     var makeData = function (value) { return makeTag({

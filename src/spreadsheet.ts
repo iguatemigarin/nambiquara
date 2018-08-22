@@ -1,17 +1,16 @@
 import { makeTag } from './tagger'
 
-export type CellValue = number | string | null | void
+export type CellValue = number | string | null | void | object
 
 const HEAD: string = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>'
-const makeWorksheetOptions = (): string => makeTag({ name: 'x:WorksheetOptions' })
-const makeTypeForValue = (value: CellValue): string => {
-  switch (typeof value) {
-    case 'string': return 'String'
-    case 'number': return 'Number'
-    default: return 'String'
+export const makeWorksheetOptions = (): string => makeTag({ name: 'x:WorksheetOptions' })
+export const makeTypeForValue = (value: CellValue): string => {
+  if (typeof value === 'number') {
+    return 'Number'
   }
+  return 'String'
 }
-const makeValue = (value: CellValue): string => value == null ? '' : String(value)
+export const makeValue = (value: CellValue): string => value == null ? '' : String(value)
 const makeData = (value: CellValue): string => makeTag({
   name: 'Data',
   children: makeValue(value),

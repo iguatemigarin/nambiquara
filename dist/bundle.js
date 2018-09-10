@@ -35,7 +35,7 @@
         return params.join(' ');
     };
 
-    var HEAD = '<?xml version="1.0" encoding="UTF-16"?><?mso-application progid="Excel.Sheet"?>';
+    var HEAD = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>';
     var makeWorksheetOptions = function () { return makeTag({ name: 'x:WorksheetOptions' }); };
     var makeTypeForValue = function (value) {
         if (typeof value === 'number') {

@@ -1,7 +1,7 @@
 {
   "name": "nambiquara",
   "version": "2.2.0",
-  "description": "A js-to-excel (xml/xlsx) tool.",
+  "description": "A js-to-excel (xml) tool.",
   "main": "dist/bundle.min.js",
   "scripts": {
     "build:clear": "rimraf lib dist",

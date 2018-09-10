@@ -2,7 +2,7 @@ import { makeTag } from './tagger'
 
 export type CellValue = number | string | null | void | object
 
-const HEAD: string = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>'
+const HEAD: string = '<?xml version="1.0" encoding="UTF-16"?><?mso-application progid="Excel.Sheet"?>'
 export const makeWorksheetOptions = (): string => makeTag({ name: 'x:WorksheetOptions' })
 export const makeTypeForValue = (value: CellValue): string => {
   if (typeof value === 'number') {

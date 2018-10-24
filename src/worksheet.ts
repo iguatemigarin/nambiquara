@@ -6,15 +6,36 @@ export const makeTypeForValue = (value: Cell): string => {
   }
   return 'String'
 }
-export const makeValue = (value: Cell): string => value == null ? '' : String(value)
-const makeData = (value: Cell): string => makeTag({
+export const makeValue = (cell: Cell): string => {
+  if (cell == null) {
+    return ''
+  }
+  if (typeof cell === 'object') {
+    return String(cell.value)
+  }
+  return String(cell)
+}
+const makeStyleForCell = (cell: Cell): { 'ss:StyleID'?: string } => {
+  if (typeof cell !== 'object' || cell == null) {
+    return {}
+  }
+
+  return {
+    'ss:StyleID': cell.styleId,
+  }
+}
+const makeData = (cell: Cell): string => makeTag({
   name: 'Data',
-  children: makeValue(value),
+  children: makeValue(cell),
   props: {
-    'ss:Type': makeTypeForValue(value),
+    'ss:Type': makeTypeForValue(cell),
   },
 })
-const makeCell = (value: Cell): string => makeTag({ name: 'Cell', children: makeData(value) })
+const makeCell = (cell: Cell): string => makeTag({
+  name: 'Cell',
+  children: makeData(cell),
+  props: makeStyleForCell(cell),
+})
 const makeRow = (values: Cell[]): string => makeTag({ name: 'Row', children: values.map(makeCell).join('') })
 const makeRows = (values: Cell[][]): string => values.map(makeRow).join('')
 const makeTable = (values: Cell[][]): string => makeTag({ name: 'Table', children: makeRows(values) })

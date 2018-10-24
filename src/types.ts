@@ -1,5 +1,5 @@
 export type StyleId = string
-export type CellValue = number | string | null | void | object
+export type CellValue = number | string | null | void
 export type StyledCell = {
   value: CellValue,
   styleId: StyleId,

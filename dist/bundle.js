@@ -72,15 +72,35 @@
         }
         return 'String';
     };
-    var makeValue = function (value) { return value == null ? '' : String(value); };
-    var makeData = function (value) { return makeTag({
+    var makeValue = function (cell) {
+        if (cell == null) {
+            return '';
+        }
+        if (typeof cell === 'object') {
+            return String(cell.value);
+        }
+        return String(cell);
+    };
+    var makeStyleForCell = function (cell) {
+        if (typeof cell !== 'object' || cell == null) {
+            return {};
+        }
+        return {
+            'ss:StyleID': cell.styleId,
+        };
+    };
+    var makeData = function (cell) { return makeTag({
         name: 'Data',
-        children: makeValue(value),
+        children: makeValue(cell),
         props: {
-            'ss:Type': makeTypeForValue(value),
+            'ss:Type': makeTypeForValue(cell),
         },
     }); };
-    var makeCell = function (value) { return makeTag({ name: 'Cell', children: makeData(value) }); };
+    var makeCell = function (cell) { return makeTag({
+        name: 'Cell',
+        children: makeData(cell),
+        props: makeStyleForCell(cell),
+    }); };
     var makeRow = function (values) { return makeTag({ name: 'Row', children: values.map(makeCell).join('') }); };
     var makeRows = function (values) { return values.map(makeRow).join(''); };
     var makeTable = function (values) { return makeTag({ name: 'Table', children: makeRows(values) }); };

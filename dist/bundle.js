@@ -35,8 +35,37 @@
         return params.join(' ');
     };
 
-    var HEAD = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>';
-    var makeWorksheetOptions = function () { return makeTag({ name: 'x:WorksheetOptions' }); };
+    var makeStyles = function (params) {
+        if (params === void 0) { params = []; }
+        var styles = params.map(function (param) {
+            var props = translateStyleParams(param);
+            var children = [makeFontTag(param), makeInteriorTag(param)];
+            return makeTag({ name: 'Style', props: props, children: children });
+        });
+        return makeTag({ name: 'Styles', children: styles });
+    };
+    var makeFontTag = function (params) {
+        var props = translateFontParams(params.font || {});
+        return makeTag({ name: 'Font', props: props });
+    };
+    var makeInteriorTag = function (params) { return makeTag({
+        name: 'Interior', props: {
+            'ss:Color': params.background || '',
+            'ss:Pattern': 'Solid',
+        },
+    }); };
+    var translateStyleParams = function (params) { return ({
+        'ss:ID': params.id,
+    }); };
+    var translateFontParams = function (font) {
+        if (font === void 0) { font = {}; }
+        return ({
+            'ss:Bold': font.bold ? 1 : 0,
+            'ss:Color': font.color ? font.color : '',
+            'ss:Size': font.size && font.size > 0 ? font.size : '',
+        });
+    };
+
     var makeTypeForValue = function (value) {
         if (typeof value === 'number') {
             return 'Number';
@@ -55,6 +84,7 @@
     var makeRow = function (values) { return makeTag({ name: 'Row', children: values.map(makeCell).join('') }); };
     var makeRows = function (values) { return values.map(makeRow).join(''); };
     var makeTable = function (values) { return makeTag({ name: 'Table', children: makeRows(values) }); };
+    var makeWorksheetOptions = function () { return makeTag({ name: 'x:WorksheetOptions' }); };
     var makeWorksheet = function (values) { return makeTag({
         name: 'ss:Worksheet',
         children: [makeTable(values), makeWorksheetOptions()],
@@ -62,9 +92,11 @@
             'ss:Name': 'Worksheet1',
         },
     }); };
-    var makeWorkBook = function (values) { return makeTag({
+
+    var HEAD = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>';
+    var makeWorkBook = function (values, styles) { return makeTag({
         name: 'Workbook',
-        children: makeWorksheet(values),
+        children: [makeStyles(styles), makeWorksheet(values)],
         props: {
             'xmlns': 'urn:schemas-microsoft-com:office:spreadsheet',
             'xmlns:c': 'urn:schemas-microsoft-com:office:component:spreadsheet',
@@ -76,17 +108,27 @@
             'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
         },
     }); };
-    var makeSpreadsheet = function (values) {
+    var makeSimpleSpreadsheet = function (values) {
         if (values === void 0) { values = [[]]; }
         return [
             HEAD,
-            makeWorkBook(values),
+            makeWorkBook(values, []),
+        ].join('');
+    };
+    var makeStyledSpreadsheet = function (values, styles) {
+        if (values === void 0) { values = [[]]; }
+        if (styles === void 0) { styles = []; }
+        return [
+            HEAD,
+            makeWorkBook(values, styles),
         ].join('');
     };
 
-    var fromArray = function (values) { return makeSpreadsheet(values); };
+    var fromArray = function (values) { return makeSimpleSpreadsheet(values); };
 
     exports.fromArray = fromArray;
+    exports.makeSimpleSpreadsheet = makeSimpleSpreadsheet;
+    exports.makeStyledSpreadsheet = makeStyledSpreadsheet;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -16,7 +16,7 @@ describe('Tag tool', () => {
     const tag = makeTag(settings)
     expect(tag).toBe('<MyTag>text1text2</MyTag>')
   })
-  it('should create simple tag without props', () => {
+  it('should create simple tag with props', () => {
     const settings = {
       name: 'MyTag',
       props: {

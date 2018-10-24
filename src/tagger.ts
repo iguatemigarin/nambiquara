@@ -1,11 +1,5 @@
-export type Props = {
-  [key: string]: any,
-}
-export type Tag = {
-  name: string,
-  children?: string | string[],
-  props?: Props,
-}
+import { Props, Tag } from './types'
+
 export const makeTag = (tag: Tag): string => {
   const { name, children, props = {} } = tag
   const params = makeParams(props)

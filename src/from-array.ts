@@ -1,2 +1,4 @@
-import { CellValue, makeSpreadsheet } from './spreadsheet'
-export const fromArray = (values: CellValue[][]): string => makeSpreadsheet(values)
+import { makeSimpleSpreadsheet } from './spreadsheet'
+import { Cell } from './types'
+
+export const fromArray = (values: Cell[][]): string => makeSimpleSpreadsheet(values)

@@ -27,18 +27,22 @@ spreadsheet = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="E
 
 ## API
 
-### fromArray
+### makeSimpleSpreadsheet
 
 Accepts a two dimension array with primitive values.
-Returns a string.
+Returns a string representing a spreadsheet (Excel 2003 XML format).
 
 ```javascript
-fromArray([
+makeSimpleSpreadsheet([
   [1,2,3.8, Math.PI],
   [null, undefined],
   ['a sentence', '3', 'three']
 ])
 ```
+
+### fromArray
+
+Alias for makeSimpleSpreadsheet
 
 ___
 

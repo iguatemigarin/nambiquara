@@ -39,7 +39,7 @@
         if (params === void 0) { params = []; }
         var styles = params.map(function (param) {
             var props = translateStyleParams(param);
-            var children = [makeFontTag(param), makeInteriorTag(param)];
+            var children = [makeFontTag(param), makeInteriorTag(param), makeAlignmentTag(param)];
             return makeTag({ name: 'Style', props: props, children: children });
         });
         return makeTag({ name: 'Styles', children: styles });
@@ -60,6 +60,17 @@
             props: {
                 'ss:Color': fix3Color(params.background),
                 'ss:Pattern': 'Solid',
+            },
+        });
+    };
+    var makeAlignmentTag = function (params) {
+        if (!params.align) {
+            return '';
+        }
+        return makeTag({
+            name: 'Alignment',
+            props: {
+                'ss:Horizontal': String(params.align),
             },
         });
     };
@@ -123,20 +134,27 @@
     }); };
     var makeRow = function (values) { return makeTag({ name: 'Row', children: values.map(makeCell).join('') }); };
     var makeRows = function (values) { return values.map(makeRow).join(''); };
-    var makeTable = function (values) { return makeTag({ name: 'Table', children: makeRows(values) }); };
+    var makeWidths = function (widths) {
+        return widths
+            .map(function (width) { return makeTag({ name: 'Column', props: { 'ss:Width': String(width) } }); })
+            .join('');
+    };
+    var makeTable = function (values, widths) {
+        return makeTag({ name: 'Table', children: [makeWidths(widths), makeRows(values)] });
+    };
     var makeWorksheetOptions = function () { return makeTag({ name: 'x:WorksheetOptions' }); };
-    var makeWorksheet = function (values) { return makeTag({
+    var makeWorksheet = function (values, widths) { return makeTag({
         name: 'ss:Worksheet',
-        children: [makeTable(values), makeWorksheetOptions()],
+        children: [makeTable(values, widths), makeWorksheetOptions()],
         props: {
             'ss:Name': 'Worksheet1',
         },
     }); };
 
     var HEAD = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>';
-    var makeWorkBook = function (values, styles) { return makeTag({
+    var makeWorkBook = function (values, styles, widths) { return makeTag({
         name: 'Workbook',
-        children: [makeStyles(styles), makeWorksheet(values)],
+        children: [makeStyles(styles), makeWorksheet(values, widths)],
         props: {
             'xmlns': 'urn:schemas-microsoft-com:office:spreadsheet',
             'xmlns:c': 'urn:schemas-microsoft-com:office:component:spreadsheet',
@@ -152,15 +170,16 @@
         if (values === void 0) { values = [[]]; }
         return [
             HEAD,
-            makeWorkBook(values, []),
+            makeWorkBook(values, [], []),
         ].join('');
     };
-    var makeStyledSpreadsheet = function (values, styles) {
+    var makeStyledSpreadsheet = function (values, styles, widths) {
         if (values === void 0) { values = [[]]; }
         if (styles === void 0) { styles = []; }
+        if (widths === void 0) { widths = []; }
         return [
             HEAD,
-            makeWorkBook(values, styles),
+            makeWorkBook(values, styles, widths),
         ].join('');
     };
 

@@ -22,6 +22,7 @@
       <Style ss:ID="SubTitle">
         <Font ss:Color="#000000"/>
         <Interior ss:Color="#FCC400" ss:Pattern="Solid"/>
+        <Alignment ss:Horizontal="Center"/>
       </Style>
     </Styles>
     <ss:Worksheet ss:Name="Execução de Obra">

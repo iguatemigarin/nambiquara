@@ -17,6 +17,7 @@ export type StyleParams = {
   id: string,
   font?: FontStyle,
   background?: string,
+  align?: string,
 }
 export type FontStyle = {
   bold?: boolean,

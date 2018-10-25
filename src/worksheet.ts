@@ -38,12 +38,17 @@ const makeCell = (cell: Cell): string => makeTag({
 })
 const makeRow = (values: Cell[]): string => makeTag({ name: 'Row', children: values.map(makeCell).join('') })
 const makeRows = (values: Cell[][]): string => values.map(makeRow).join('')
-const makeTable = (values: Cell[][]): string => makeTag({ name: 'Table', children: makeRows(values) })
+const makeWidths = (widths: number[]): string =>
+  widths
+    .map(width => makeTag({ name: 'Column', props: { 'ss:Width': String(width) }}))
+    .join('')
+const makeTable = (values: Cell[][], widths: number[]): string =>
+  makeTag({ name: 'Table', children: [makeWidths(widths), makeRows(values)] })
 export const makeWorksheetOptions = (): string => makeTag({ name: 'x:WorksheetOptions' })
 
-export const makeWorksheet = (values: Cell[][]): string => makeTag({
+export const makeWorksheet = (values: Cell[][], widths: number[]): string => makeTag({
   name: 'ss:Worksheet',
-  children: [makeTable(values), makeWorksheetOptions()],
+  children: [makeTable(values, widths), makeWorksheetOptions()],
   props: {
     'ss:Name': 'Worksheet1',
   },

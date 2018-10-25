@@ -5,9 +5,9 @@ import { makeWorksheet } from './worksheet'
 
 const HEAD: string = '<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?>'
 
-const makeWorkBook = (values: Cell[][], styles: StyleParams[]): string => makeTag({
+const makeWorkBook = (values: Cell[][], styles: StyleParams[], widths: number[]): string => makeTag({
   name: 'Workbook',
-  children: [makeStyles(styles), makeWorksheet(values)],
+  children: [makeStyles(styles), makeWorksheet(values, widths)],
   props: {
     'xmlns': 'urn:schemas-microsoft-com:office:spreadsheet',
     'xmlns:c': 'urn:schemas-microsoft-com:office:component:spreadsheet',
@@ -21,10 +21,14 @@ const makeWorkBook = (values: Cell[][], styles: StyleParams[]): string => makeTa
 })
 export const makeSimpleSpreadsheet = (values: Cell[][] = [[]]): string => [
   HEAD,
-  makeWorkBook(values, []),
+  makeWorkBook(values, [], []),
 ].join('')
 
-export const makeStyledSpreadsheet = (values: Cell[][] = [[]], styles: StyleParams[] = []): string => [
+export const makeStyledSpreadsheet = (
+    values: Cell[][] = [[]],
+    styles: StyleParams[] = [],
+    widths: number[] = [],
+  ): string => [
   HEAD,
-  makeWorkBook(values, styles),
+  makeWorkBook(values, styles, widths),
 ].join('')

@@ -1,6 +1,6 @@
 {
   "name": "nambiquara",
-  "version": "2.3.4",
+  "version": "2.4.0",
   "description": "A js-to-excel (xml) tool.",
   "main": "dist/bundle.js",
   "scripts": {

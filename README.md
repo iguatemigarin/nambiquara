@@ -1,3 +1,5 @@
+# THIS LIBRARY IS UNDER HEAVY DEVELOPMENT. DON'T USE IN PRODUCTION
+
 # nambiquara
 
 [![Build Status](https://semaphoreci.com/api/v1/iguatemi/nambiquara/branches/master/shields_badge.svg)](https://semaphoreci.com/iguatemi/nambiquara)

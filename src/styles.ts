@@ -11,20 +11,43 @@ export const makeStyles = (params: StyleParams[] = []) => {
   return makeTag({ name: 'Styles', children: styles })
 }
 const makeFontTag = (params: StyleParams) => {
-  const props = translateFontParams(params.font || {})
+  if (!params.font) {
+    return ''
+  }
+  const props = translateFontParams(params.font)
   return makeTag({ name: 'Font', props })
 }
-const makeInteriorTag = (params: StyleParams) => makeTag({
-  name: 'Interior', props: {
-    'ss:Color': params.background || '',
-    'ss:Pattern': 'Solid',
-  },
-})
+const makeInteriorTag = (params: StyleParams) => {
+  if (!params.background) {
+    return ''
+  }
+  return makeTag({
+    name: 'Interior',
+    props: {
+      'ss:Color': fix3Color(params.background),
+      'ss:Pattern': 'Solid',
+    },
+  })
+}
 const translateStyleParams = (params: StyleParams) => ({
   'ss:ID': params.id,
 })
-const translateFontParams = (font: FontStyle = {}) => ({
-  'ss:Bold': font.bold ? 1 : 0,
-  'ss:Color': font.color ? font.color : '',
-  'ss:Size': font.size && font.size > 0 ? font.size : '',
-})
+const translateFontParams = (font: FontStyle = {}) => {
+  const newObj: { [index: string]: string } = {
+    'ss:Bold': font.bold ? '1' : '0',
+  }
+  if (font.color) {
+    newObj['ss:Color'] = fix3Color(font.color)
+  }
+  if (font.size) {
+    newObj['ss:Size'] = String(font.size)
+  }
+
+  return newObj
+}
+const fix3Color = (color: string) => {
+  if (color[0] === '#' && color.length !== 7)  {
+    return `${color[0]}${color.slice(1).split('').map(c => `${c}${c}`).join('')}`
+  }
+  return color
+}

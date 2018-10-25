@@ -45,25 +45,45 @@
         return makeTag({ name: 'Styles', children: styles });
     };
     var makeFontTag = function (params) {
-        var props = translateFontParams(params.font || {});
+        if (!params.font) {
+            return '';
+        }
+        var props = translateFontParams(params.font);
         return makeTag({ name: 'Font', props: props });
     };
-    var makeInteriorTag = function (params) { return makeTag({
-        name: 'Interior', props: {
-            'ss:Color': params.background || '',
-            'ss:Pattern': 'Solid',
-        },
-    }); };
+    var makeInteriorTag = function (params) {
+        if (!params.background) {
+            return '';
+        }
+        return makeTag({
+            name: 'Interior',
+            props: {
+                'ss:Color': fix3Color(params.background),
+                'ss:Pattern': 'Solid',
+            },
+        });
+    };
     var translateStyleParams = function (params) { return ({
         'ss:ID': params.id,
     }); };
     var translateFontParams = function (font) {
         if (font === void 0) { font = {}; }
-        return ({
-            'ss:Bold': font.bold ? 1 : 0,
-            'ss:Color': font.color ? font.color : '',
-            'ss:Size': font.size && font.size > 0 ? font.size : '',
-        });
+        var newObj = {
+            'ss:Bold': font.bold ? '1' : '0',
+        };
+        if (font.color) {
+            newObj['ss:Color'] = fix3Color(font.color);
+        }
+        if (font.size) {
+            newObj['ss:Size'] = String(font.size);
+        }
+        return newObj;
+    };
+    var fix3Color = function (color) {
+        if (color[0] === '#' && color.length !== 7) {
+            return "" + color[0] + color.slice(1).split('').map(function (c) { return "" + c + c; }).join('');
+        }
+        return color;
     };
 
     var makeTypeForValue = function (value) {

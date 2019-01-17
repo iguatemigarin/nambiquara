@@ -3,7 +3,7 @@ export type CellValue = number | string | null | void
 export type StyledCell = {
   value: CellValue,
   styleId: StyleId,
-  mergeAcross?: number
+  mergeAcross?: number,
 }
 export type Cell = StyledCell | CellValue
 export type Props = {
@@ -19,6 +19,7 @@ export type StyleParams = {
   font?: FontStyle,
   background?: string,
   align?: string,
+  border?: boolean,
 }
 export type FontStyle = {
   bold?: boolean,

@@ -4,7 +4,7 @@ import { FontStyle, StyleParams } from './types'
 export const makeStyles = (params: StyleParams[] = []) => {
   const styles = params.map(param => {
     const props = translateStyleParams(param)
-    const children = [makeFontTag(param), makeInteriorTag(param), makeAlignmentTag(param)]
+    const children = [makeFontTag(param), makeInteriorTag(param), makeAlignmentTag(param), makeBorderTag(param)]
     return makeTag({ name: 'Style', props, children })
   })
 
@@ -39,6 +39,17 @@ const makeAlignmentTag = (params: StyleParams) => {
       'ss:Horizontal': String(params.align),
     },
   })
+}
+const makeBorderTag = (params: StyleParams): string => {
+  if (params.border) {
+    return '<Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ' +
+      'ss:Weight="1" ss:Color="#000000"/><Border ss:Position="Left" ss:LineS' +
+      'tyle="Continuous" ss:Weight="1" ss:Color="#000000"/><Border ss:Positi' +
+      'on="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"' +
+      '/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" s' +
+      's:Color="#000000"/></Borders>'
+  }
+  return ''
 }
 const translateStyleParams = (params: StyleParams) => ({
   'ss:ID': params.id,

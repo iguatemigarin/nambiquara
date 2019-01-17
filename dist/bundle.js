@@ -39,7 +39,7 @@
         if (params === void 0) { params = []; }
         var styles = params.map(function (param) {
             var props = translateStyleParams(param);
-            var children = [makeFontTag(param), makeInteriorTag(param), makeAlignmentTag(param)];
+            var children = [makeFontTag(param), makeInteriorTag(param), makeAlignmentTag(param), makeBorderTag(param)];
             return makeTag({ name: 'Style', props: props, children: children });
         });
         return makeTag({ name: 'Styles', children: styles });
@@ -73,6 +73,17 @@
                 'ss:Horizontal': String(params.align),
             },
         });
+    };
+    var makeBorderTag = function (params) {
+        if (params.border) {
+            return '<Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ' +
+                'ss:Weight="1" ss:Color="#000000"/><Border ss:Position="Left" ss:LineS' +
+                'tyle="Continuous" ss:Weight="1" ss:Color="#000000"/><Border ss:Positi' +
+                'on="Right" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#000000"' +
+                '/><Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1" s' +
+                's:Color="#000000"/></Borders>';
+        }
+        return '';
     };
     var translateStyleParams = function (params) { return ({
         'ss:ID': params.id,

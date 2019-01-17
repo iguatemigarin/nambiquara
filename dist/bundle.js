@@ -97,6 +97,17 @@
         return color;
     };
 
+    var __assign = (null && null.__assign) || function () {
+        __assign = Object.assign || function(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                    t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
     var makeTypeForValue = function (value) {
         if (typeof value === 'number') {
             return 'Number';
@@ -120,6 +131,14 @@
             'ss:StyleID': cell.styleId,
         };
     };
+    var makeMergeForCell = function (cell) {
+        if (typeof cell !== 'object' || cell == null || !cell.mergeAcross) {
+            return {};
+        }
+        return {
+            'ss:MergeAcross': String(cell.mergeAcross),
+        };
+    };
     var makeData = function (cell) { return makeTag({
         name: 'Data',
         children: makeValue(cell),
@@ -130,7 +149,7 @@
     var makeCell = function (cell) { return makeTag({
         name: 'Cell',
         children: makeData(cell),
-        props: makeStyleForCell(cell),
+        props: __assign({}, makeStyleForCell(cell), makeMergeForCell(cell)),
     }); };
     var makeRow = function (values) { return makeTag({ name: 'Row', children: values.map(makeCell).join('') }); };
     var makeRows = function (values) { return values.map(makeRow).join(''); };

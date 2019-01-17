@@ -3,6 +3,7 @@ export type CellValue = number | string | null | void
 export type StyledCell = {
   value: CellValue,
   styleId: StyleId,
+  mergeAcross?: number
 }
 export type Cell = StyledCell | CellValue
 export type Props = {

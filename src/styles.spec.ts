@@ -11,8 +11,7 @@ import { makeStyles } from './styles'
 describe('Style tool', () => {
   it('Should create empty Style tag', () => {
     const style = makeStyles([{ id: 'theId' }])
-    const expected = '<Styles><Style ss:ID="theId"><Font ss:Bold="0" ss:Color="" ss:Size=""/>' +
-    '<Interior ss:Color="" ss:Pattern="Solid"/></Style></Styles>'
+    const expected = '<Styles><Style ss:ID="theId"></Style></Styles>'
     expect(style).toBe(expected)
   })
 

@@ -4,5 +4,6 @@ export default {
     file: 'dist/bundle.js',
     format: 'umd',
     name: 'nambiquara'
-  }
+  },
+  context: null
 }

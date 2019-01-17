@@ -17,6 +17,7 @@ describe('Worksheet module', () => {
   })
   test('makeTypeForValue must render not numbers as string type', () => {
     const values = ['a', String(1), null, {}, [], undefined]
+    // @ts-ignore
     const types = values.map(makeTypeForValue).filter(n => n === 'String')
     expect(types.length).toBe(values.length)
   })
@@ -27,6 +28,7 @@ describe('Worksheet module', () => {
   })
   test('makeValue must cast any value to string', () => {
     const values = [1, undefined, [], {}, null, 'x']
+    // @ts-ignore
     const types = values.map(makeValue).filter(n => typeof n === 'string')
     expect(types.length).toBe(values.length)
   })

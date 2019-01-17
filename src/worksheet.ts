@@ -24,6 +24,15 @@ const makeStyleForCell = (cell: Cell): { 'ss:StyleID'?: string } => {
     'ss:StyleID': cell.styleId,
   }
 }
+const makeMergeForCell = (cell: Cell): { 'ss:MergeAcross'?: string } => {
+  if (typeof cell !== 'object' || cell == null || !cell.mergeAcross) {
+    return {}
+  }
+
+  return {
+    'ss:MergeAcross': String(cell.mergeAcross),
+  }
+}
 const makeData = (cell: Cell): string => makeTag({
   name: 'Data',
   children: makeValue(cell),
@@ -34,7 +43,7 @@ const makeData = (cell: Cell): string => makeTag({
 const makeCell = (cell: Cell): string => makeTag({
   name: 'Cell',
   children: makeData(cell),
-  props: makeStyleForCell(cell),
+  props: {...makeStyleForCell(cell), ...makeMergeForCell(cell)},
 })
 const makeRow = (values: Cell[]): string => makeTag({ name: 'Row', children: values.map(makeCell).join('') })
 const makeRows = (values: Cell[][]): string => values.map(makeRow).join('')
